@@ -12,6 +12,7 @@
 OBJS = bag.o counters.o file.o hashtable.o jhash.o memory.o set.o webpage.o
 LIB = libcs50.a
 
+
 # add -DNOSLEEP to disable the automatic sleep after web-page fetches
 #               (students, please do not use -DNOSLEEP!)
 # add -DMEMTEST for memory tracking report in indexer
@@ -22,8 +23,8 @@ CFLAGS = -Wall -pedantic -std=c11 -ggdb $(FLAGS)
 CC = gcc
 
 # Build the library by archiving object files
-$(LIB): $(OBJS)
-	ar cr $(LIB) $(OBJS)
+$(LIB): libcs50-given.a
+	cp libcs50-given.a $(LIB)
 
 # Dependencies: object files depend on header files
 bag.o: bag.h
@@ -33,7 +34,7 @@ hashtable.o: hashtable.h set.h jhash.h
 jhash.o: jhash.h
 memory.o: memory.h
 set.o: set.h
-webpage.o:  webpage.h
+webpage.o: webpage.h
 
 .PHONY: clean
 
