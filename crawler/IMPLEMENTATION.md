@@ -1,4 +1,7 @@
-Need to include the following: 
+# CS50 Lab 4
+## CS50 Summer 2020
+
+<!-- Need to include the following: 
 
 Detailed pseudo code for each of the objects/components/functions,
 Definition of detailed APIs, interfaces, function prototypes and their parameters,
@@ -6,4 +9,16 @@ Data structures (e.g., struct names and members),
 Security and privacy properties,
 Error handling and recovery,
 Resource management,
-Persistant storage (files, database, etc).
+Persistant storage (files, database, etc). -->
+
+### Functions & Interfaces
+
+### Implementation Psuedocode
+
+### Data Structures
+
+### Error Handeling
+
+### Resource Management
+
+### File Storage 
