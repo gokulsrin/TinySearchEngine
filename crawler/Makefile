@@ -26,8 +26,8 @@ crawler.o: ../libcs50/bag.h ../libcs50/memory.h ../libcs50/webpage.h ../libcs50/
 
 .PHONY: test valgrind clean
 
-test: $(PROG) 
-	./$(PROG) 
+test: 
+	bash -v testing.sh > testing.out
 
 valgrind: $(PROG) 
 	valgrind ./$(PROG) 

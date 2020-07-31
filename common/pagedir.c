@@ -9,7 +9,7 @@ void pagesave(char * url, int depth, char * content, int id){
          //do the math to concatonate the id with the directory
         int length = snprintf( NULL, 0, "%d", id);
         char* str = malloc(sizeof(char*));
-        snprintf(str, length + 12, "./crawldir/%d", id);
+        snprintf(str, length + 100000, "./crawldir/%d", id);
 
         //create file pointer and print to the file 
         FILE *fp = fopen(str, "w");
@@ -18,9 +18,9 @@ void pagesave(char * url, int depth, char * content, int id){
         //close file and free pointer
         fclose(fp);
         free(str);
-        
     }
+    //some error has occoured and because this function is void per the specifications, I need to print instead of return.
     else{
-        perror("Something has gone wrong; incorrect input");
+        printf("Something has gone wrong; incorrect input; Overwriting Error Code 0!");
     }
 }

@@ -1,11 +1,92 @@
-http://old-www.cs.dartmouth.edu/~cs50/data/tse/letters/B.html 
- 2 
- <html>
-<title>B</title>
-B is for <a href=https://en.wikipedia.org/wiki/Breadth-first_search>Breadth-first search</a>.
-<a href=C.html>C</a>
-<a href=D.html>D</a>
-<a href=E.html>E</a>
-<a href=index.html>home</a>
+http://old-www.cs.dartmouth.edu/~cs50/ 
+ 1 
+ <!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS50 Overview</title>
+  <meta name="description" content="Overview">
+
+  <link rel="stylesheet" href="/~cs50/css/main.css">
+  <link rel="canonical" href="https://www.cs.dartmouth.edu/~cs50/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+    <img src="/~cs50/50logo.jpeg" alt="CS50 logo" width="80" style="float:left; margin:0px 10px">
+    <a class="site-title" href="/~cs50/">CS50 Summer 2020</a>
+
+    <nav class="site-nav">
+
+      [<a href="https://canvas.dartmouth.edu/courses/40751">Canvas</a>]
+      [<a href="http://dart-cosc50-2020x.slack.com/">Slack</a>]
+      [<a href="https://github.com/cs50-summer-2020">GitHub</a>]
+      [<a href="/~cs50/Schedule.pdf">Schedule</a>]
+      [<a href="https://www.cs.dartmouth.edu/~cs50/Lectures/">Lectures</a>]
+      [<a href="https://www.cs.dartmouth.edu/~cs50/Reading/">Reading</a>]
+<!--      [<a href="https://www.cs.dartmouth.edu/~cs50/examples/">Examples</a>]  -->
+      [<a href="https://www.cs.dartmouth.edu/~cs50/Logistics/">Logistics</a>]
+      [<a href="https://www.cs.dartmouth.edu/~cs50/Resources/">Resources</a>]
+      [<a href="https://www.cs.dartmouth.edu/~cs50/Labs/">Labs</a>]
+      [<a href="https://www.cs.dartmouth.edu/~cs50/Project/">Project</a>]
+
+   </nav>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <h1 id="overview">Overview</h1>
+
+<p>In Computer Science 50 you will learn how to design &amp; build large,  reliable, maintainable, and understandable software systems.  In the process you will learn to program in C with Unix development tools.</p>
+
+<p>The objectives of this course are for you to learn:</p>
+
+<ul>
+  <li>software design principles</li>
+  <li>good coding style, and documentation</li>
+  <li>debugging and testing</li>
+  <li>design and coding with a team</li>
+  <li>programming in C</li>
+  <li>programming on Unix</li>
+  <li>use of git for source-code management</li>
+</ul>
+
+<p>The first few weeks of this course are a crash course in Unix and C.
+After that, you will build your very own Search Engine application.
+Finally, you will join a team of other students to design, build, document, and test a large software project.</p>
+
+<p>We are adopting the flipped-classroom format. We expect that you’d watch the pre-released video (on <a href="https://canvas.dartmouth.edu/courses/40751">Canvas</a>) before the class and come to the class with questions and engage in group activities.</p>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">CS50 Summer 2020 -- Dartmouth College</h2>
+
+    <p> <font size=-1> 
+    	This version of the course is based upon those designed by Vasanta Lakshmi Kommineni, 
+    	Professors Kotz, Palmer, Campbell, and Balkcom. 
+	I am deeply indebted to these outstanding educators.
+    -- <a href="/~xia/">Xia Zhou</a>
+       </font> 
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
 </html>
  

@@ -1,6 +1,7 @@
 //This is the crawler.c file... it's going yo do the crawling
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <ctype.h>
 #include "../libcs50/bag.h"
 #include "../libcs50/memory.h"
@@ -20,17 +21,21 @@ int main(const int argc, const char *argv[]){
         char *seedURL = (char*)argv[1];
         char *pageDirectory = (char*)argv[2];
         const int maxDepth = atoi(argv[3]);
+        if(strlen(seedURL) < 32){
+            printf("Error 2; Invalid input: Please enter valid inputs");
+
+        }
         //there was no error
         if(seedURL != NULL && access(pageDirectory, F_OK) != -1 && maxDepth >= 0){
             crawl(seedURL, pageDirectory, maxDepth);
         }
         else{
-            perror("Invalid input: Please enter valid inputs");
+            printf("Error 2; Invalid input: Please enter valid inputs");
         }
 
     }
     else{
-        perror("Invalid Input: Not enough input");
+        printf("Error 1; Invalid Input: Not enough input");
     }
 }
 
@@ -103,10 +108,11 @@ void crawl(char *su, char *pd, const int md){
         // bag_delete(trash, webpage_delete);
         //free hashtable 
         hashtable_iterate(ht, NULL, stringdelete);
-        count_report(stdout, "Report");
+        // count_report(stdout, "Report");
+        printf("0: Successful");
     }
     else{
-        printf("Error: null webpage");
+        printf("Error 3: null webpage");
     }
 }
 
