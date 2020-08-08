@@ -1,5 +1,5 @@
 /* 
- * pagedir - for saving webpages to files and stuff
+ * pagedir - for saving and loading webpages to files and stuff
  *
  *Gokul Srinivasan - Summer 2020 - CS50
  */
@@ -18,3 +18,11 @@
         pagesave(string, depth, ontent, id);
  */
 void pagesave(char * url, int depth, char * content, int id);
+/**************** pageload ****************/
+/* Input: a file path
+ * 1. We attempt to load the webpage_t file based on the files first and second lines
+ * which should correspond to the url and the depth.
+ 2. We handle null pointer, and other complications, but assume that the file is formatted properly. 
+ 3. The user will later be responsible for freeing the memory allocated
+ */
+webpage_t* pageload(char *filename);

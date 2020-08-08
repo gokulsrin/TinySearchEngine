@@ -5,7 +5,7 @@
 # CS50, Summer 2020
 
 # object files, and the target library
-OBJS = pagedir.o
+OBJS = pagedir.o index.o word.o
 LIB = common.a
 
 # add -DNOSLEEP to disable the automatic sleep after web-page fetches
@@ -22,7 +22,9 @@ $(LIB): $(OBJS)
 	ar cr $(LIB) $(OBJS)
 
 # Dependencies: object files depend on header files
-pagedir.o: pagedir.h
+pagedir.o: pagedir.h 
+index.o: index.h ../libcs50/memory.h ../libcs50/hashtable.h ../libcs50/counters.h ../libcs50/set.h
+word.o: word.h
 
 .PHONY: clean
 
