@@ -1,8 +1,26 @@
-* User interface
-* Inputs and Outputs
-* Functional decomposition into modules
-* Pseudo code for logic/algorithmic flow
-* Dataflow through modules
-* Major data structures
-* Testing plan
 
+Test 1: invalid pathDirectory in initial program call 
+Directory (argument 1) does not exist Invalid initial arguments
+
+Test 2: Invalid indexFile path in intial program call  
+Failed to read to file specified by argument 2 Invalid initial arguments
+Test 3: consecutive ands in query  
+Invalid query: and/or sequentially Query: This and and that
+Test 4: consecutive ors in query  
+Invalid query: and/or sequentially Query: This or or that
+Test 5: and/or at the beginning  
+Invalid query: and/or in first position Query: and this or that
+Test 6: and/or at the end  
+Invalid query: and/or in last position Query: this that or
+Test 7: and/or consecutively  
+Invalid query: and/or sequentially Query: this or and that
+Test 8: query: 'this   that or    home'  
+Query: this that or home Matches 3 documents ranked: score:2, fileID:1, url:http://old-www.cs.dartmouth.edu/~cs50/data/tse/letters/index.html score:1, fileID:2, url:http://old-www.cs.dartmouth.edu/~cs50/data/tse/letters/A.html score:1, fileID:3, url:http://old-www.cs.dartmouth.edu/~cs50/data/tse/letters/B.html
+Test 9: query: 'this   that or    home'  
+Query: algorithm and the home No documents match.
+Test 10: query: 'huffman or  transform  or traversal'  
+Query: huffman or transform or traversal No documents match.
+Test 11: query: 'biology first search'  
+Query: biology first search No documents match.
+Test 12: query: 'biology or first and search'  
+Query: biology or first and search Matches 1 documents ranked: score:1, fileID:3, url:http://old-www.cs.dartmouth.edu/~cs50/data/tse/letters/B.html

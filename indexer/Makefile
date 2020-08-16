@@ -34,7 +34,7 @@ indexer.o: ../common/index.h ../libcs50/memory.h ../libcs50/webpage.h ../libcs50
 
 # expects nothing
 test: 
-	bash -v testing.sh > testing.out
+	bash -v testing.sh 
 
 # expects a file `test.names` to exist; it can contain any text.
 valgrind: $(PROG) test.names

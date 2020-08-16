@@ -21,7 +21,7 @@ $(PROG): $(OBJS)
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
 # object files depend on include files
-querier.o: ../common/index.h ../libcs50/memory.h ../libcs50/file.h ../libcs50/webpage.h ../libcs50/counters.h ../libcs50/hashtable.h 
+querier.o: ../common/index.h ../common/pagedir.h ../libcs50/memory.h ../libcs50/file.h ../libcs50/webpage.h ../libcs50/counters.h ../libcs50/hashtable.h  ../libcs50/bag.h
 
 
 .PHONY: test valgrind clean

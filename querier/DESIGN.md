@@ -1,113 +1,105 @@
-# CS50 Lab 6
-## CS50 Summer 2020
+# TSE Querier Design Spec
 
-<!-- Need to include the following: 
+For specific requirements please see the querier `requirements.md` file; the **Querier**, provided a valid directory containing crawled webpages, and an indexFileName, will allow the user to enter queries, and output which files best output each query, if any. 
 
-Detailed pseudo code for each of the objects/components/functions,
-Definition of detailed APIs, interfaces, function prototypes and their parameters,
-Data structures (e.g., struct names and members),
-Security and privacy properties,
-Error handling and recovery,
-Resource management,
-Persistant storage (files, database, etc). -->
+Using a reconstructed index from the indexFileName, and the number of files within the pageDirectory, the querier is able to determine the score of each query for each respective file, check whether that file satisfies the query at all, and combine this information to provide valid output to the user. 
 
-### Functions & Interfaces
-There are three functions being used in my code. Namely: 
+The user is able to enter queries until they decide to quit and press ctrl + c. 
 
-```c
-int main(const int argc, const char *argv[]);
-bool process_arguments(const int argc, const char *argv[], char* p, char* i);
-index_t* index_build(char *filedir, int size);
-bag_t* directory_parse(char *filedir, int *len);
-void deleteitem(void *item);
-void deletewebpage(void *item);
+### User interface
 
-index_t* index_new(const int size);
-bool index_insert(index_t * index, char * word, char * id);
-bool index_delete(index_t *index, void (*itemdelete)(void *item));
-bool index_save(index_t *index, FILE *fp);
-void item_print(void *arg, const char *key, void *item);
-void counter_print(void *arg, const int key, const int count);
-index_t* index_load(FILE *fp);
+The querier has only a command line interface where two arguments are necessary. Not the slash after argument 1. This is critical.
 
-```
-Within the main function, I do call two main functions that do the bulk of the work: 1) process_arguments and 2) index_build. These functions then call a host of other functions, some defined in indexer.c and most others belonging to the API index.h
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <string.h>
-#include <ctype.h>
-#include <errno.h>
-#include <unistd.h>
-
-
-#include "../libcs50/bag.h"
-#include "../libcs50/memory.h"
-#include "../libcs50/webpage.h"
-#include "../libcs50/hashtable.h"
-#include "../libcs50/counters.h"
-#include "../common/index.h"
-#include "../common/pagedir.h"
+```bash
+./querier webpageDirectory/ indexFilePath 
 ```
 
-Some of these files are not often used (i.e. <stdlib.h> or "unistd.h"), but I use the bag, memory, hashtable pagedir, and index.h module extensively. The most frequent API calls are indeed calls to index.h and pagedir.h where, as stated above, the bulk of the logic exists.
+For example:
 
-The `pagedir` module allows for a file to be written into when given a valid url, depth, html content, and file id. Some more of the specifics will be discussed in `pagedir.h`, but the module functions to write our webpage content into a file. The pagedir method also contains our pageload() function that creates a webpages struct from a saved webpage, proceeding through all of the words contained within the document.
-
-```c
-webpage_t* pageload(char * filepath); 
+``` bash
+$ ./querier ./tesing/crawldir/ ./testing/output.txt
 ```
-### Implementation Psuedocode
+This is a case used within `testing.sh`itself.
 
-Psuedocode for scoring each query 
+### Inputs and outputs
 
-1. For every file in the directory
-2. For all of the words in the query 
-3. Calculate the score of each of the words individually and put the scores in a score array, where and/or are represented by -1 and -2
-3. If an and conjoins two words, take the minimum score of the two
-4. If an or conjoins two words, take the sum of the two scores
+Input: the only inputs are command-line parameters.
+
+Output: We provide output to stdout detailing which of the files provided in pageDirectory best satisfy the query submitted. 
 
 
+### Functional decomposition into modules
 
-The psuedocode for directory_parse is as follows:
+We anticipate the following modules or functions:
 
-1. Assume every file in directory is labeled correctly 
-2. While there is another file in the directory, proceed 
-	3. For each file, store the first two lines of the file as url and depth 
-	4. Create a webpage with that information
-	5. Add  webpage to the bag of files
-6. Return bag 
+*process_arguments*, process command-line args 
+*count_files*, determine the number of files in pageDirectory
+*tokenize_string*, take the user query and turn it into an array of words
+*validate_token*, ensure the tokens created meet the requirements
+*process_querey*, process user query 
+*score_documents*, determine the score for a particular query given a particular document
+*orsequence*, traverse the query, adding the number returned from *andsequence* to the sum
+*satisfies_or*, traverse the query, adding the boolean returned from *satisfies_and* to the boolean
+*andsequence*, traverse the query, accumulating the minimum score between some current sum and some next word
+*satisfies_and*,traverse the query, accumulating the boolean value of the accumulated boolean && next_word_boolean
+*getscore*, get the score of a particular word given a particular file
+*rankpages*, sort the scores for each file in descending order
+*cmpfunc*, comparator for *qsort* in c
+*geturl*, return the url of a specific file in pageDirectory
+*deleteitem*, delete our index_t * structs
+*deletewebpage*, delete our webpage_t * structs 
+
+*main*, call the functions above sequentially
+
+We also need to load indicies hence:
+1. *index_load*, load the index from its saved form
+
+We also need to load webpages so we should exect some modules or functions:
+2. *webpageload*, given a crawled webpage, recreate the webpage data structure. 
+
+And some helper modules that provide data structures:
+
+3. *webpage* because we need to load a specific file and retrieve its url to display to the user
+4. *counters* because they store the score for each {fileID, score} pair 
+
+### Pseudo code for logic/algorithmic flow
+
+The querier will run as follows:
+
+1. execute from a command line as shown in the User Interface
+2. process arguments and make sure they are valid 
+3. process a query from stdin
+    4. tokenize the query 
+    5. ensure that the query is valid based on its tokens 
+    6. score each of the files based on the query 
+        7. take the sum with orsequence 
+            8. take the sum with andsequence 
+    9. determine which files satisfy the query 
+        10. find the boolean with satisfies_or
+            11. find the boolean with satisfies_and
+    12. sort the scores of the files which satisfy the query in descending order
+    13. Output these scores to the user, and continue repeating (3-13) until user quits 
 
 
-### Data Structures
+### Dataflow through modules
 
-The index struct consists of nothing but a hashhtabe with (word, counter_set) pairs. Each counter_set contains counters with (fileID, # of occurances) within it. Each time a word is added with a fileID matching some already in the table, that specific counter is incremented. 
+ 1. *main* sends parameters to have them parsed, builds the index, and saves the index
+ 2. *process_query* takes each query, has them tokenized in *tokenize_string* and validated in *validate_token*
+ 3. Each of the files is scored according to the query *score_documents* by being passed to *orsequence* and in turn to *andsequence*
+ 4. Each of the files is determined to satisfy the file in *score_documents* by being passed to *satisfies_or* and in turn to *satisfies_and*
+ 5. Output is generated
+ 
 
-Other than that, a bag is used to store all of the loaded webpages in directory_parse. 
+### Major data structures
 
-### Error Handeling
+Ararys for the backbone of my project. Particulary the: char *words[]. This array contains all of the tokenized words, and is passed between many functions, and is, without doubt, the most critcal data structure in my project. I'll be the first to admit, the run time of my code may be quicker if I had chosen to use more complex strucures, but because I don't feel that comfortable in c, I opted not to. 
 
-Again, there are many assert() and if(NULL) checks throughout the code, ensuring that all memory created, deleated or altered is done so correctly. If these checks are not passe, usually a message is printed to stderr and a return is executed. 
-
-### Resource Management
-
-All of the mallocs conducted in this project have corresponding frees. 
-
-### File Storage 
-
-File [indexFilePath] has traditionally been "testx.txt" within the same directory, but there are really no restrictions on where you are allowed to place these things. 
+### Testing plan
 
 
-### Testing
+*Integration/regression testing*.  
+Integration testing is conducted in testing.sh.
 
-Again, the testing for indexer, given that it is command line, is conducted in the testing.sh script 
+Broadly, the testing seeks to check the error handling capabilities of querier as well as its functionality. More about this in the README.md and in IMPLEMENTATION.md. 
 
-Broadly testing is spread over 3 categories 
-
-1. Proper input, different test cases
-2. Mixed input, different test cases
-3. Entirely incorrect input, different test cases
-
-
+BUT, SUPER IMPORTANT NOTE, PLEASE DO READ WHAT I'VE SAID IN THE README ABOUT TESTING. 
