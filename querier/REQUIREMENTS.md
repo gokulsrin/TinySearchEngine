@@ -172,7 +172,7 @@ Error: bad character '-' in query.
 A document *satisfies* a single-word query for `word` if that `word` appears in that document.
 
 A document *satisfies* a conjunction (aka andsequence) `wordA and wordB` if both `wordA` and `wordB` appear in the document.
-By induction, a document satisfies `<andsequence> and wordC` if the document satisfies the `andsequence` and `wordC` also appears in the document.
+
 
 A document *satisfies* a disjunction `wordA or wordB` if either `wordA` and `wordB` appear in the document.
 By induction, a document satisfies `<andsequenceA> or <andsequenceB>` if the document satisfies the `andsequenceB` or satisfies `andsequenceB`, or both.

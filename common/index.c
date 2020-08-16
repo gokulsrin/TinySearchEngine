@@ -189,3 +189,12 @@ index_t* index_load(FILE *fp){
     count_free(key);
     return index;
 }
+
+//return the counters object
+void* index_retrieve(index_t *index, char *key){
+    if(key == NULL){
+        return NULL;
+    }
+    counters_t *counters = hashtable_find(index->ht, key);
+    return counters;
+}

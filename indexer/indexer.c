@@ -73,7 +73,8 @@ int main(const int argc, const char *argv[]){
     //build the index 
     index_t *index = index_build(pageDir, 100);
     assert(index != NULL);
-    FILE *fp = fopen("./test5.txt", "w");
+    //this is the difference
+    FILE *fp = fopen(indexFile, "w");
     index_save(index, fp);
     
     //close file free index

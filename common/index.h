@@ -73,3 +73,9 @@ void counter_print(void *arg, const int key, const int count);
  * A non-NULL file pointer must be provided, else we return false. 
  */
 index_t* index_load(FILE *fp);
+
+/**************** index_retrieve ****************/
+/* Input: a valid key
+ * return the counters object
+ */
+void* index_retrieve(index_t *index, char *key);
